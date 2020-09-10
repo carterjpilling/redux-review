@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { setMovieInfo } from '../redux/moviesReducer'
 import styles from './styles'
 
 class MovieForm extends Component {
@@ -19,6 +21,9 @@ class MovieForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
+    const { title, poster, rating } = this.state
+    //Invoke this.props.setMovieInfo, not the method itself.
+    this.props.setMovieInfo(title, poster, rating)
     this.props.history.push('/confirm')
   }
 
@@ -56,4 +61,8 @@ class MovieForm extends Component {
     )
   }
 }
-export default MovieForm
+//Invoke connect twice. Null because we actually don't need to use mapStateToProps.
+export default connect(
+  null,
+  { setMovieInfo }
+)(MovieForm)
